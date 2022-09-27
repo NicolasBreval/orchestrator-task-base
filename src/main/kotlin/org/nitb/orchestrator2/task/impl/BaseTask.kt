@@ -254,8 +254,8 @@ abstract class BaseTask<P: TaskParameters, T>(
     /**
      * Name of manager queue obtained from properties. Manager queue is where task puts their executions results
      */
-    private val managerQueue: String = applicationContext.getProperty("application.manager.queue", String::class.java)
-        .orElseThrow { throw InitializationException("Property 'application.manager.queue' doesn't exists") }
+    private val managerQueue: String = applicationContext.getProperty("orchestrator.mq.manager.queue", String::class.java)
+        .orElseThrow { throw InitializationException("Property 'orchestrator.mq.manager.queue' doesn't exists") }
 
     /**
      * Object used to manage MQ operations (create queue, create a consumer, send message to queue, ...)

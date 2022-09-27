@@ -10,7 +10,7 @@ import org.nitb.orchestrator2.task.util.SystemProperties
 
 @Suppress("UNUSED")
 @Factory
-@Requires(property = SystemProperties.APPLICATION_QUEUE_SYSTEM, value = SystemProperties.RABBITMQ_QUEUE_SYSTEM_OPTION)
+@Requires(property = SystemProperties.MQ_TYPE, value = SystemProperties.RABBITMQ_QUEUE_SYSTEM_OPTION)
 class ChannelFactory {
 
     @Bean

@@ -495,6 +495,6 @@ class CommonTaskTests {
     @Inject
     private lateinit var taskBuilder: TaskBuilder
 
-    @Value("\${application.manager.queue}")
+    @Value("\${orchestrator.mq.manager.queue}")
     private lateinit var managerName: String
 }

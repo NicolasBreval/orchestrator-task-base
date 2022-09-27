@@ -10,7 +10,7 @@ import javax.jms.Session
 
 @Suppress("UNUSED")
 @Factory
-@Requires(property = SystemProperties.APPLICATION_QUEUE_SYSTEM, value = SystemProperties.ACTIVEMQ_QUEUE_SYSTEM_OPTION)
+@Requires(property = SystemProperties.MQ_TYPE, value = SystemProperties.ACTIVEMQ_QUEUE_SYSTEM_OPTION)
 class SessionFactory {
 
     @Bean

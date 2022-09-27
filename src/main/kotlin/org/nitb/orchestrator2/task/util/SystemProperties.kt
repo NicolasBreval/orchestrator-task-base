@@ -6,7 +6,7 @@ import io.micronaut.context.annotation.ConfigurationProperties
 class SystemProperties {
 
     companion object {
-        const val APPLICATION_QUEUE_SYSTEM = "application.queue.system"
+        const val MQ_TYPE = "orchestrator.mq.type"
         const val ACTIVEMQ_QUEUE_SYSTEM_OPTION = "activemq"
         const val RABBITMQ_QUEUE_SYSTEM_OPTION = "rabbitmq"
     }
