@@ -60,6 +60,7 @@ dependencies {
 
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
+    withSourcesJar()
 }
 
 tasks {
