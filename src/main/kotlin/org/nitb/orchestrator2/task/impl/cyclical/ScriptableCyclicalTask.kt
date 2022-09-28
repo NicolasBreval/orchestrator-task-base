@@ -10,7 +10,7 @@ import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.nitb.orchestrator2.task.exception.ScriptResultException
 import org.nitb.orchestrator2.task.js.JavaScriptInterpreter
 import org.nitb.orchestrator2.task.parameters.cyclical.ScriptableCyclicalTaskParameters
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 @Suppress("UNUSED")
 @Prototype
@@ -23,7 +23,7 @@ class ScriptableCyclicalTask(
     applicationContext: ApplicationContext
 ): CyclicalTask<ScriptableCyclicalTaskParameters>(name, parameters, ScriptableCyclicalTaskParameters::class.java, applicationContext) {
 
-    override fun onLaunch(inputMessage: Nothing?, sender: String, dispatchTime: LocalDateTime): DataFrame<*>? {
+    override fun onLaunch(inputMessage: Nothing?, sender: String, dispatchTime: OffsetDateTime): DataFrame<*>? {
         return try {
             JavaScriptInterpreter.process<DataFrame<*>>(taskParameters.script, Pair("inputMessage", inputMessage),
                 Pair("sender", sender), Pair("dispatchTime", dispatchTime), Pair("logger", logger))
@@ -34,15 +34,15 @@ class ScriptableCyclicalTask(
         }
     }
 
-    override fun onException(e: Exception, inputMessage: Nothing?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onException(e: Exception, inputMessage: Nothing?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onEnd(inputMessage: Nothing?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onEnd(inputMessage: Nothing?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onTimeout(inputMessage: Nothing?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onTimeout(inputMessage: Nothing?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
@@ -50,7 +50,7 @@ class ScriptableCyclicalTask(
         result: DataFrame<*>?,
         inputMessage: Nothing?,
         sender: String,
-        dispatchTime: LocalDateTime
+        dispatchTime: OffsetDateTime
     ): Boolean {
         return if (taskParameters.checkResultScript.isNullOrEmpty()) true else try {
             JavaScriptInterpreter.process<Boolean>(taskParameters.checkResultScript, Pair("executionResult", result),

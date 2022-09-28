@@ -9,7 +9,7 @@ import org.jetbrains.kotlinx.dataframe.api.ParserOptions
 import org.jetbrains.kotlinx.dataframe.io.readCSV
 import org.nitb.orchestrator2.task.parameters.consumer.CSVConsumerTaskParameters
 import java.io.ByteArrayInputStream
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.util.*
 
 @Suppress("UNUSED")
@@ -22,7 +22,7 @@ class CSVConsumer (
     parameters: Map<String, Any>,
     applicationContext: ApplicationContext
 ): ConsumerTask<CSVConsumerTaskParameters, ByteArray>(name, parameters, CSVConsumerTaskParameters::class.java, applicationContext) {
-    override fun onLaunch(inputMessage: ByteArray?, sender: String, dispatchTime: LocalDateTime): DataFrame<*>? {
+    override fun onLaunch(inputMessage: ByteArray?, sender: String, dispatchTime: OffsetDateTime): DataFrame<*>? {
         return inputMessage?.let { bytes ->
             ByteArrayInputStream(bytes).use { stream ->
                 DataFrame.readCSV(stream, delimiter = taskParameters.delimiter, isCompressed = taskParameters.compressed,
@@ -31,15 +31,15 @@ class CSVConsumer (
         }
     }
 
-    override fun onException(e: Exception, inputMessage: ByteArray?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onException(e: Exception, inputMessage: ByteArray?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onEnd(inputMessage: ByteArray?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onEnd(inputMessage: ByteArray?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onTimeout(inputMessage: ByteArray?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onTimeout(inputMessage: ByteArray?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 

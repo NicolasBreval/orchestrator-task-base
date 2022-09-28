@@ -2,7 +2,7 @@ package org.nitb.orchestrator2.task.model
 
 import org.nitb.orchestrator2.task.enums.TaskStatus
 import java.math.BigInteger
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 data class TaskInfo(
     val starts: BigInteger,
@@ -10,6 +10,6 @@ data class TaskInfo(
     val successLaunches: BigInteger,
     val errorLaunches: BigInteger,
     val status: TaskStatus,
-    val implementationTime: LocalDateTime,
-    val lastLaunchDate: LocalDateTime? = null
+    val implementationTime: OffsetDateTime,
+    val lastLaunchDate: OffsetDateTime? = null
 )

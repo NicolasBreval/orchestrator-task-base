@@ -11,9 +11,12 @@ import org.jetbrains.kotlinx.dataframe.api.getColumn
 import org.jetbrains.kotlinx.dataframe.io.readCSV
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.nitb.orchestrator2.task.mq.model.MQMessage
 import org.nitb.orchestrator2.task.parameters.TaskParameters
 import org.nitb.orchestrator2.task.parameters.consumer.ConsumerTaskParameters
 import org.nitb.orchestrator2.task.parameters.consumer.ScriptableConsumerTaskParameters
+import org.slf4j.LoggerFactory
+import java.time.OffsetDateTime
 import java.util.*
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSubtypeOf
@@ -278,6 +281,18 @@ class SerializationTest {
         assertTrue(""""mq\.script" *: *"MY JS SCRIPT"""".toRegex().containsMatchIn(serialized))
     }
 
+    // endregion
+
+    // region MQ MESSAGE
+
+    @Test
+    fun mqMessageSerializationTest() {
+        val original = MQMessage("Hello!!!", "test", OffsetDateTime.now())
+
+        val serialized = jsonMapper.writeValueAsString(original)
+
+        LoggerFactory.getLogger(this::class.java).info(serialized)
+    }
 
     // endregion
 

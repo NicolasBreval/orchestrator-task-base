@@ -19,7 +19,7 @@ import org.nitb.orchestrator2.task.enums.TaskStatus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.math.BigInteger
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import javax.annotation.PostConstruct
 import javax.annotation.PreDestroy
 import javax.jms.BytesMessage
@@ -100,7 +100,7 @@ abstract class BaseTask<P: TaskParameters, T>(
     /**
      * Last date when task was launched. If task wasn't launched ever, their value is null
      */
-    val lastLaunchDate: LocalDateTime? get() = if (this::_lastLaunchDate.isInitialized) _lastLaunchDate else null
+    val lastLaunchDate: OffsetDateTime? get() = if (this::_lastLaunchDate.isInitialized) _lastLaunchDate else null
 
     /**
      * Returns a summary of current task status, with their execution status, number of starts, stops, launches, ...
@@ -113,7 +113,7 @@ abstract class BaseTask<P: TaskParameters, T>(
      * Defines dataflow of a task, with all steps from a new execution's start to their finalization
      */
     @OptIn(DelicateCoroutinesApi::class)
-    protected suspend fun launch(executionId: String, inputMessage: T?, sender: String, dispatchTime: LocalDateTime) {
+    protected suspend fun launch(executionId: String, inputMessage: T?, sender: String, dispatchTime: OffsetDateTime) {
         try {
             _status = TaskStatus.RUNNING
             logger.debug("Status changed: $_status")
@@ -229,12 +229,12 @@ abstract class BaseTask<P: TaskParameters, T>(
     /**
      * Date and time when task was created
      */
-    private val implementationTime: LocalDateTime = LocalDateTime.now()
+    private val implementationTime: OffsetDateTime = OffsetDateTime.now()
 
     /**
      * Last date when task was launched
      */
-    private lateinit var _lastLaunchDate: LocalDateTime
+    private lateinit var _lastLaunchDate: OffsetDateTime
 
     /**
      * Logger object to send messages to console or log file
@@ -280,27 +280,27 @@ abstract class BaseTask<P: TaskParameters, T>(
     /**
      * Abstract function to make custom logic
      */
-    protected abstract fun onLaunch(inputMessage: T?, sender: String, dispatchTime: LocalDateTime): DataFrame<*>?
+    protected abstract fun onLaunch(inputMessage: T?, sender: String, dispatchTime: OffsetDateTime): DataFrame<*>?
 
     /**
      * Abstract function to make custom operations when task execution produces an exception
      */
-    protected abstract fun onException(e: Exception, inputMessage: T?, sender: String, dispatchTime: LocalDateTime)
+    protected abstract fun onException(e: Exception, inputMessage: T?, sender: String, dispatchTime: OffsetDateTime)
 
     /**
      * Abstract function to make custom operations when task execution finishes
      */
-    protected abstract fun onEnd(inputMessage: T?, sender: String, dispatchTime: LocalDateTime)
+    protected abstract fun onEnd(inputMessage: T?, sender: String, dispatchTime: OffsetDateTime)
 
     /**
      * Abstract function to make custom operations when task execution aborts due to a timeout
      */
-    protected abstract fun onTimeout(inputMessage: T?, sender: String, dispatchTime: LocalDateTime)
+    protected abstract fun onTimeout(inputMessage: T?, sender: String, dispatchTime: OffsetDateTime)
 
     /**
      * Overridable function to define a function to check if result of [onLaunch] is correct or not
      */
-    protected open fun resultIsCorrect(result: DataFrame<*>?, inputMessage: T?, sender: String, dispatchTime: LocalDateTime): Boolean = true
+    protected open fun resultIsCorrect(result: DataFrame<*>?, inputMessage: T?, sender: String, dispatchTime: OffsetDateTime): Boolean = true
 
     /**
      * Overridable function to make some operations when task is stopped

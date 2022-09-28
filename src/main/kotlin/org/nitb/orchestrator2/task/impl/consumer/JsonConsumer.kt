@@ -6,7 +6,7 @@ import io.micronaut.context.annotation.Prototype
 import jakarta.inject.Named
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.nitb.orchestrator2.task.parameters.consumer.ConsumerTaskParameters
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 @Suppress("UNUSED")
 @Prototype
@@ -22,20 +22,20 @@ class JsonConsumer(
     override fun onLaunch(
         inputMessage: DataFrame<*>?,
         sender: String,
-        dispatchTime: LocalDateTime
+        dispatchTime: OffsetDateTime
     ): DataFrame<*>? {
         return inputMessage
     }
 
-    override fun onException(e: Exception, inputMessage: DataFrame<*>?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onException(e: Exception, inputMessage: DataFrame<*>?, sender: String, dispatchTime: OffsetDateTime) {
         // do nothing
     }
 
-    override fun onEnd(inputMessage: DataFrame<*>?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onEnd(inputMessage: DataFrame<*>?, sender: String, dispatchTime: OffsetDateTime) {
         // do nothing
     }
 
-    override fun onTimeout(inputMessage: DataFrame<*>?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onTimeout(inputMessage: DataFrame<*>?, sender: String, dispatchTime: OffsetDateTime) {
         // do nothing
     }
 }

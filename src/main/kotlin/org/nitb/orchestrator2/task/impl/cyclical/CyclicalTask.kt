@@ -10,7 +10,7 @@ import kotlinx.coroutines.Job
 import org.nitb.orchestrator2.task.impl.BaseTask
 import org.nitb.orchestrator2.task.mq.impl.MQManager
 import org.nitb.orchestrator2.task.parameters.cyclical.CyclicalTaskParameters
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
@@ -62,11 +62,11 @@ abstract class CyclicalTask<P: CyclicalTaskParameters>(
         jobQueue.add(GlobalScope.launch {
             if (!isCron) {
                 while (true) {
-                    launch(UUID.randomUUID().toString(), null, name, LocalDateTime.now())
+                    launch(UUID.randomUUID().toString(), null, name, OffsetDateTime.now())
                     makeDelay()
                 }
             } else {
-                launch(UUID.randomUUID().toString(), null, name, LocalDateTime.now())
+                launch(UUID.randomUUID().toString(), null, name, OffsetDateTime.now())
             }
         })
     }

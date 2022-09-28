@@ -10,7 +10,7 @@ import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.nitb.orchestrator2.task.exception.ScriptResultException
 import org.nitb.orchestrator2.task.js.JavaScriptInterpreter
 import org.nitb.orchestrator2.task.parameters.consumer.ScriptableConsumerTaskParameters
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 @Suppress("UNUSED")
 @Prototype
@@ -26,7 +26,7 @@ class ScriptableConsumer(
     override fun onLaunch(
         inputMessage: String?,
         sender: String,
-        dispatchTime: LocalDateTime
+        dispatchTime: OffsetDateTime
     ): DataFrame<*>? {
         return try {
             JavaScriptInterpreter.process<DataFrame<*>>(taskParameters.script, Pair("inputMessage", inputMessage),
@@ -38,15 +38,15 @@ class ScriptableConsumer(
         }
     }
 
-    override fun onException(e: Exception, inputMessage: String?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onException(e: Exception, inputMessage: String?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onEnd(inputMessage: String?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onEnd(inputMessage: String?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
-    override fun onTimeout(inputMessage: String?, sender: String, dispatchTime: LocalDateTime) {
+    override fun onTimeout(inputMessage: String?, sender: String, dispatchTime: OffsetDateTime) {
 
     }
 
@@ -54,7 +54,7 @@ class ScriptableConsumer(
         result: DataFrame<*>?,
         inputMessage: String?,
         sender: String,
-        dispatchTime: LocalDateTime
+        dispatchTime: OffsetDateTime
     ): Boolean {
         return if (taskParameters.checkResultScript.isNullOrEmpty()) true else try {
             JavaScriptInterpreter.process<Boolean>(taskParameters.checkResultScript, Pair("executionResult", result),

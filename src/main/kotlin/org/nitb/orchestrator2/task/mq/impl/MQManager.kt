@@ -7,7 +7,7 @@ import org.nitb.orchestrator2.task.exception.MQMessageParseException
 import org.nitb.orchestrator2.task.model.StatusMessage
 import org.nitb.orchestrator2.task.mq.model.MQMessage
 import org.slf4j.LoggerFactory
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import javax.annotation.PreDestroy
 import javax.jms.BytesMessage
 import javax.jms.TextMessage
@@ -39,7 +39,7 @@ abstract class MQManager<Q, C, M> {
 
     fun send(sender: String, queue: String, message: Any, executionId: String) {
         waitForConnection()
-        sendNewMessage(queue, MQMessage(message, sender, LocalDateTime.now(), executionId))
+        sendNewMessage(queue, MQMessage(message, sender, OffsetDateTime.now(), executionId))
     }
 
     fun sendStatus(sender: String, queue: String, executionId: String, executionStatus: ExecutionStatus) {
