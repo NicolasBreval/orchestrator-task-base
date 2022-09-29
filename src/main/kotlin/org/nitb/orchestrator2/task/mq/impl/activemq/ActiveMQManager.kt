@@ -27,7 +27,7 @@ class ActiveMQManager(
     }
 
     override fun newQueue(queue: String): Destination {
-        return (session as ActiveMQSession).createQueue("$queue?consumer.exclusive=true")
+        return (session as ActiveMQSession).createQueue(queue)
     }
 
     override fun sendNewMessage(queue: String, message: Any) {
