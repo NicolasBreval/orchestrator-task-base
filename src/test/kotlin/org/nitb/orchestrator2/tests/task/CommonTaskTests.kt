@@ -137,7 +137,7 @@ class CommonTaskTests {
                 task.status == TaskStatus.IDLE
             }
 
-            queueManager.send(testConsumerName, taskName, messageToSend, UUID.randomUUID().toString())
+            queueManager.send(testConsumerName, taskName, messageToSend)
 
             await().until {
                 executionStatus.get() != null
@@ -220,7 +220,7 @@ class CommonTaskTests {
             }
 
             taskNames.forEach { name ->
-                queueManager.send(testConsumerName, name, messageToSend, UUID.randomUUID().toString())
+                queueManager.send(testConsumerName, name, messageToSend)
             }
 
             await().until {

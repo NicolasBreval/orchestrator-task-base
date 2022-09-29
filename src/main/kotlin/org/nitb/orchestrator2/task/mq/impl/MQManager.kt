@@ -8,6 +8,7 @@ import org.nitb.orchestrator2.task.model.StatusMessage
 import org.nitb.orchestrator2.task.mq.model.MQMessage
 import org.slf4j.LoggerFactory
 import java.time.OffsetDateTime
+import java.util.UUID
 import javax.annotation.PreDestroy
 import javax.jms.BytesMessage
 import javax.jms.TextMessage
@@ -37,7 +38,7 @@ abstract class MQManager<Q, C, M> {
         consumers.clear()
     }
 
-    fun send(sender: String, queue: String, message: Any, executionId: String) {
+    fun send(sender: String, queue: String, message: Any, executionId: String = UUID.randomUUID().toString()) {
         waitForConnection()
         sendNewMessage(queue, MQMessage(message, sender, OffsetDateTime.now(), executionId))
     }
