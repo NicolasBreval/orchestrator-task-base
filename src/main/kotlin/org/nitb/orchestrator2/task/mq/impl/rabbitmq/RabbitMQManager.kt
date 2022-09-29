@@ -30,7 +30,7 @@ class RabbitMQManager(
     }
 
     override fun newQueue(queue: String): DeclareOk {
-        return channel.queueDeclare(queue, true, false, true, null)
+        return channel.queueDeclare(queue, true, false, false, null)
     }
 
     override fun sendNewMessage(queue: String, message: Any) {
