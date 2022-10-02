@@ -1,4 +1,2 @@
-orchestrator:
-  mq:
-    type: rabbitmq
-    manager.queue: manager
+orchestrator.mq.manager.queue: manager
+rabbitmq.enabled: true

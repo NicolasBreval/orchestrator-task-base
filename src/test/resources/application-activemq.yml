@@ -1,4 +1,2 @@
-orchestrator:
-  mq:
-    type: activemq
-    manager.queue: manager
+orchestrator.mq.manager.queue: manager
+jms.activemq.classic.enabled: true

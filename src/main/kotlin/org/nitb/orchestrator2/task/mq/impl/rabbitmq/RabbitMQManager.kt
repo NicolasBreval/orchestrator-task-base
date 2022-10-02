@@ -10,12 +10,10 @@ import io.micronaut.context.annotation.Prototype
 import io.micronaut.context.annotation.Requires
 import jakarta.inject.Named
 import org.nitb.orchestrator2.task.mq.impl.MQManager
-import org.nitb.orchestrator2.task.util.SystemProperties.Companion.MQ_TYPE
-import org.nitb.orchestrator2.task.util.SystemProperties.Companion.RABBITMQ_QUEUE_SYSTEM_OPTION
 
 @Prototype
-@Named("$RABBITMQ_QUEUE_SYSTEM_OPTION-manager")
-@Requires(property = MQ_TYPE, value = RABBITMQ_QUEUE_SYSTEM_OPTION)
+@Named("rabbitmq-manager")
+@Requires(property = "rabbitmq.enabled", value = "true")
 class RabbitMQManager(
     private val channel: Channel,
     private val mapper: ObjectMapper

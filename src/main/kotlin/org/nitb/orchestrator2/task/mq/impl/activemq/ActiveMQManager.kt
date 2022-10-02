@@ -6,13 +6,11 @@ import io.micronaut.context.annotation.Requires
 import jakarta.inject.Named
 import org.apache.activemq.ActiveMQSession
 import org.nitb.orchestrator2.task.mq.impl.MQManager
-import org.nitb.orchestrator2.task.util.SystemProperties.Companion.ACTIVEMQ_QUEUE_SYSTEM_OPTION
-import org.nitb.orchestrator2.task.util.SystemProperties.Companion.MQ_TYPE
 import javax.jms.*
 
 @Prototype
-@Named("$ACTIVEMQ_QUEUE_SYSTEM_OPTION-manager")
-@Requires(property = MQ_TYPE, value = ACTIVEMQ_QUEUE_SYSTEM_OPTION)
+@Named("activemq-manager")
+@Requires(property = "jms.activemq.classic.enabled", value = "true")
 class ActiveMQManager(
     private val session: Session,
     private val mapper: ObjectMapper
