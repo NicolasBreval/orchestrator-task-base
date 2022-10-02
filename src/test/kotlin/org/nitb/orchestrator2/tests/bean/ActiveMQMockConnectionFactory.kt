@@ -13,7 +13,7 @@ import javax.jms.ConnectionFactory
 class ActiveMQMockConnectionFactory {
 
     @Bean
-    @Requires(property = "jms.activemq.classic.enabled", value = "true")
+    @Requires(property = "micronaut.jms.activemq.classic.enabled", value = "true")
     fun createConnectionFactory(): ConnectionFactory {
         val randomPort = ServerSocket(0).let { val localPort = it.localPort; it.close(); localPort }
         val brokerUrl = "tcp://localhost:$randomPort"

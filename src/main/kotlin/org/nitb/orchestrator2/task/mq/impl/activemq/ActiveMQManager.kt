@@ -10,7 +10,7 @@ import javax.jms.*
 
 @Prototype
 @Named("activemq-manager")
-@Requires(property = "jms.activemq.classic.enabled", value = "true")
+@Requires(property = "micronaut.jms.activemq.classic.enabled", value = "true")
 class ActiveMQManager(
     private val session: Session,
     private val mapper: ObjectMapper

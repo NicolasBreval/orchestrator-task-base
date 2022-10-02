@@ -9,7 +9,7 @@ import javax.jms.Session
 
 @Suppress("UNUSED")
 @Factory
-@Requires(property = "jms.activemq.classic.enabled", value = "true")
+@Requires(property = "micronaut.jms.activemq.classic.enabled", value = "true")
 class SessionFactory {
 
     @Bean
