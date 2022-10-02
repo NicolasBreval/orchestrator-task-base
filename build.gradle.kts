@@ -13,7 +13,6 @@ plugins {
     kotlin("kapt") version "$kotlinVersion"
     kotlin("plugin.allopen") version "$kotlinVersion"
     kotlin("plugin.noarg") version "$kotlinVersion"
-//    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.5.1"
 }
 
