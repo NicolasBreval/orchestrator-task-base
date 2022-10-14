@@ -1,2 +1,4 @@
 orchestrator.mq.manager.queue: manager
-jms.activemq.classic.enabled: true
+micronaut.jms.activemq.classic:
+  enabled: true
+  connection-string: test
