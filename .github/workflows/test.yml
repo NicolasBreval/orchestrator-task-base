@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
         with:
           version: 'latest'
@@ -18,7 +18,12 @@ jobs:
         run: ./gradlew clean build --stacktrace --debug
       - name: Archive test report
         if: always()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: ./build/reports/tests
+      - name: Download test report
+        if: always()
+        uses: actions/download-artifact@v3
+        with:
+          name: test-report
