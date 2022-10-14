@@ -173,7 +173,7 @@ class CommonTaskTests {
         var destroyed = false
 
         try {
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 task.totalLaunches >= (expectedSuccessExecutions + expectedErrorExecutions)
             }
 
@@ -185,7 +185,7 @@ class CommonTaskTests {
             applicationContext.destroyBean(task)
             destroyed = true
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 task.status == TaskStatus.STOPPED
             }
         } catch (e: Exception) {
