@@ -12,7 +12,7 @@ jobs:
         with:
           version: 'latest'
           java-version: '17'
-          components: 'native-image'
+          components: 'native-image,js'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and test
         run: ./gradlew clean build --stacktrace --debug
