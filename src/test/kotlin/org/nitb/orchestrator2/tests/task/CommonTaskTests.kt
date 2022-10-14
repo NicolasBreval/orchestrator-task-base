@@ -133,13 +133,13 @@ class CommonTaskTests {
         var destroyed = false
 
         try {
-            await().until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 task.status == TaskStatus.IDLE
             }
 
             queueManager.send(testConsumerName, taskName, messageToSend)
 
-            await().until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 executionStatus.get() != null
             }
 
@@ -148,7 +148,7 @@ class CommonTaskTests {
             applicationContext.destroyBean(task)
             destroyed = true
 
-            await().timeout(Duration.ofSeconds(30)).until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 task.status == TaskStatus.STOPPED
             }
         } catch (e: Exception) {
@@ -173,7 +173,7 @@ class CommonTaskTests {
         var destroyed = false
 
         try {
-            await().timeout(Duration.ofSeconds(30)).until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 task.totalLaunches >= (expectedSuccessExecutions + expectedErrorExecutions)
             }
 
@@ -185,7 +185,7 @@ class CommonTaskTests {
             applicationContext.destroyBean(task)
             destroyed = true
 
-            await().until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 task.status == TaskStatus.STOPPED
             }
         } catch (e: Exception) {
@@ -215,7 +215,7 @@ class CommonTaskTests {
 
         try {
 
-            await().until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 tasks.all { it.status == TaskStatus.IDLE }
             }
 
@@ -223,7 +223,7 @@ class CommonTaskTests {
                 queueManager.send(testConsumerName, name, messageToSend)
             }
 
-            await().until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 executionStatusList.size >= 2
             }
 
@@ -232,7 +232,7 @@ class CommonTaskTests {
             }
             destroyed = true
 
-            await().timeout(Duration.ofSeconds(30)).until {
+            await().timeout(Duration.ofMinutes(1)).until {
                 tasks.all { it.status == TaskStatus.STOPPED }
             }
         } catch (e: Exception) {
