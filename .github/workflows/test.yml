@@ -1,0 +1,18 @@
+# Builds the project running their tests. This job is only used for testing because
+# Jitpack's publishing builds project too, so it's not needed to upload artifacts
+
+name: GraalVM Community Edition build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and test
+        run: ./gradlew clean build
