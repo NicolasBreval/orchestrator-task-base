@@ -1,0 +1,56 @@
+# Builds the project running their tests. This job is only used for testing because
+# Jitpack's publishing builds project too, so it's not needed to upload artifacts
+
+name: Complete workflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image,js'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and test
+        run: ./gradlew clean build --stacktrace --debug
+      - name: Archive test report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: ./build/reports/tests
+      - name: Download test report
+        if: always()
+        uses: actions/download-artifact@v3
+        with:
+          name: test-report
+      - name: Archive jar
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: orchestrator-task-base
+          path: ./build/libs/orchestrator-task-base-(\d|\.)+.jar
+      - name: Download jar
+        if: success()
+        uses: actions/download-artifact@v3
+        with:
+          name: orchestrator-task-base
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
