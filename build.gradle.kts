@@ -78,6 +78,15 @@ tasks {
         useJUnit()
         useJUnitPlatform()
     }
+
+    register("delete-runner") {
+        dependsOn("build")
+
+        doLast {
+            println("Deleting runner jar...")
+            file("build/libs").listFiles()?.firstOrNull { it.name.contains("runner") }?.delete()
+        }
+    }
 }
 
 noArg {
