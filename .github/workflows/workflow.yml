@@ -15,7 +15,7 @@ jobs:
           components: 'native-image,js'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and test
-        run: ./gradlew clean build --stacktrace --debug
+        run: ./gradlew clean build delete-runner --stacktrace --debug
       - name: Archive test report
         if: always()
         uses: actions/upload-artifact@v3
@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: orchestrator-task-base
-          path: ./build/libs/orchestrator-task-base-(\d|\.)+.jar
+          path: ./build/libs/orchestrator-task-base-*.jar
       - name: Download jar
         if: success()
         uses: actions/download-artifact@v3
