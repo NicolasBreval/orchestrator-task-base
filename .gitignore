@@ -1,0 +1,5 @@
+.idea
+activemq-data
+build
+*.log
+.gradle
