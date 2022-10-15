@@ -133,13 +133,13 @@ class CommonTaskTests {
         var destroyed = false
 
         try {
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 task.status == TaskStatus.IDLE
             }
 
             queueManager.send(testConsumerName, taskName, messageToSend)
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 executionStatus.get() != null
             }
 
@@ -148,7 +148,7 @@ class CommonTaskTests {
             applicationContext.destroyBean(task)
             destroyed = true
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 task.status == TaskStatus.STOPPED
             }
         } catch (e: Exception) {
@@ -215,7 +215,7 @@ class CommonTaskTests {
 
         try {
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 tasks.all { it.status == TaskStatus.IDLE }
             }
 
@@ -223,7 +223,7 @@ class CommonTaskTests {
                 queueManager.send(testConsumerName, name, messageToSend)
             }
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 executionStatusList.size >= 2
             }
 
@@ -232,7 +232,7 @@ class CommonTaskTests {
             }
             destroyed = true
 
-            await().timeout(Duration.ofMinutes(1)).until {
+            await().timeout(Duration.ofMinutes(3)).until {
                 tasks.all { it.status == TaskStatus.STOPPED }
             }
         } catch (e: Exception) {
