@@ -15,7 +15,7 @@ jobs:
           components: 'native-image,js'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and test
-        run: ./gradlew clean build delete-runner --stacktrace --debug
+        run: ./gradlew clean build
       - name: Archive test report
         if: always()
         uses: actions/upload-artifact@v3
