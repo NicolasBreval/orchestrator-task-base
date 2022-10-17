@@ -79,11 +79,8 @@ tasks {
         useJUnitPlatform()
     }
 
-    register("delete-runner") {
-        dependsOn("build")
-
+    jar {
         doLast {
-            println("Deleting runner jar...")
             file("build/libs").listFiles()?.firstOrNull { it.name.contains("runner") }?.delete()
         }
     }
