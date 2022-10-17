@@ -30,7 +30,8 @@ class ActiveMQManager(
 
     override fun sendNewMessage(queue: String, message: Any, expiryTime: Long?) {
         val producer = (session as ActiveMQSession).createProducer(newQueue(queue))
-        producer.send(session.createTextMessage(mapper.writeValueAsString(message)).also { if (expiryTime != null) it.jmsExpiration = expiryTime })
+
+        producer.send(session.createTextMessage(mapper.writeValueAsString(message)), DeliveryMode.PERSISTENT, 0, expiryTime ?: 0L)
     }
 
     override fun purgeQueue(queue: String) {
