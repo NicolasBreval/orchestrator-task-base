@@ -38,14 +38,14 @@ abstract class MQManager<Q, C, M> {
         consumers.clear()
     }
 
-    fun send(sender: String, queue: String, message: Any, executionId: String = UUID.randomUUID().toString()) {
+    fun send(sender: String, queue: String, message: Any, executionId: String = UUID.randomUUID().toString(), expiryTime: Long? = null) {
         waitForConnection()
-        sendNewMessage(queue, MQMessage(message, sender, OffsetDateTime.now(), executionId))
+        sendNewMessage(queue, MQMessage(message, sender, OffsetDateTime.now(), executionId), expiryTime)
     }
 
     fun sendStatus(sender: String, queue: String, executionId: String, executionStatus: ExecutionStatus) {
         waitForConnection()
-        sendNewMessage(queue, StatusMessage(sender, executionId, executionStatus))
+        sendNewMessage(queue, StatusMessage(sender, executionId, executionStatus), null)
     }
 
     fun purge(queue: String) {
@@ -67,7 +67,7 @@ abstract class MQManager<Q, C, M> {
 
     protected abstract fun acknowledgement(message: M)
 
-    protected abstract fun sendNewMessage(queue: String, message: Any)
+    protected abstract fun sendNewMessage(queue: String, message: Any, expiryTime: Long?)
 
     protected abstract fun purgeQueue(queue: String)
 

@@ -31,8 +31,9 @@ class RabbitMQManager(
         return channel.queueDeclare(queue, true, false, false, null)
     }
 
-    override fun sendNewMessage(queue: String, message: Any) {
-        channel.basicPublish("", queue, null, mapper.writeValueAsBytes(message))
+    override fun sendNewMessage(queue: String, message: Any, expiryTime: Long?) {
+        val properties = expiryTime?.let { AMQP.BasicProperties.Builder().expiration(it.toString()).build() }
+        channel.basicPublish("", queue, properties, mapper.writeValueAsBytes(message))
     }
 
     override fun purgeQueue(queue: String) {
